@@ -905,9 +905,9 @@
 			} else {
 
 				/* This is just a hack.  We're not sure this is the right solution.
-				The number 20 is totally spitballed.  This whole "formula" is just a
+				The number 2 compensates for a border?  This whole "formula" is just a
 				first attempt, at what is essentially a workaround anyways. -Jared 2013 */
-				var totalBodyTableWidth = _table.outerWidth() + _scrollWidth + 20;
+				var totalBodyTableWidth = _table.outerWidth() + _scrollWidth + 2;
 				tampon.css('width', totalBodyTableWidth + 'px');
 			}
 
