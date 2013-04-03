@@ -247,6 +247,18 @@
 				_headerscontainer.insertBefore(table);
 			}
 
+			function getWidthOfExistingColumn(colindex) {
+
+				// find the existing column
+				var cols = _table.find('thead tr.col th');
+				if (cols.length == 0) { throw('Expected to find some columns, found zero.'); }
+				var col = cols.eq(colindex);
+				if (col.length != 1) { throw('Expected to find one column at index ' + colindex); }
+
+				// find the pixel width of the existing column
+				return col.outerWidth();
+			}
+
 			function buildColgroup (nbcol) {
 
 				var colgroup = $('<colgroup />');
@@ -257,7 +269,7 @@
 
 					for (var i = 0; i < nbcol; i++) {
 
-						temp = $('<col style="width : ' + (100/nbcol) + '%" />');
+						temp = $('<col style="width : ' + getWidthOfExistingColumn(i) + 'px" />');
 
 						colgroup.append(temp);
 
@@ -765,7 +777,7 @@
 
 			function buildPager(table) {
 
-				_pager = $('<div class="pager ui-widget-header ui-corner-bottom"></div>');
+				_pager = $('<div class="pager ui-corner-bottom"></div>');
 
 				_main_wrapper.append(_pager);
 
@@ -865,7 +877,7 @@
 
 			_wrapper.css('border', 'none').css('font-weight', 'normal');
 
-			_main_wrapper = $('<div class="t_fixed_header_main_wrapper ui-widget ui-widget-header ' + options.theme + '"></div>');
+			_main_wrapper = $('<div class="t_fixed_header_main_wrapper' + options.theme + '"></div>');
 
 			if (options.whiteSpace == 'normal') {
 
@@ -880,7 +892,7 @@
 
 			if(options.wrapper){
 
-				var tampon = _wrapper.wrap('<div class="ui-widget ui-corner-all" style="padding : 5px; font-size : 1em;"></div>').parent();
+				var tampon = _wrapper.wrap('<div class="ui-corner-all" style="font-size : 1em;"></div>').parent();
 
 			} else {
 
@@ -890,6 +902,13 @@
 			if (options.width != null && !isNaN(parseInt(options.width)) && options.width > 0) {
 
 				tampon.css('width', options.width + 'px');
+			} else {
+
+				/* This is just a hack.  We're not sure this is the right solution.
+				The number 20 is totally spitballed.  This whole "formula" is just a
+				first attempt, at what is essentially a workaround anyways. -Jared 2013 */
+				var totalBodyTableWidth = _table.outerWidth() + _scrollWidth + 20;
+				tampon.css('width', totalBodyTableWidth + 'px');
 			}
 
 			var res = _wrapper.detach();
@@ -909,7 +928,7 @@
 
 			if (options.caption != '') {
 
-				var caption = $('<div class="t_fixed_header_caption ui-widget-header ui-corner-top">' + options.caption + '</div>');
+				var caption = $('<div class="t_fixed_header_caption ui-corner-top">' + options.caption + '</div>');
 
 				_main_wrapper.prepend(caption).addClass('ui-corner-all');
 
@@ -954,7 +973,7 @@
 
 			if(options.resizeCol && (options.colratio.length == nbcol)){
 
-				_resizeGhost = $('<div class="ui-resize-ghost ui-widget-header" style="height : ' + _main_wrapper.parent().height() + 'px"></div>');
+				_resizeGhost = $('<div class="ui-resize-ghost" style="height : ' + _main_wrapper.parent().height() + 'px"></div>');
 
 				_wrapper.append(_resizeGhost);
 			}
