@@ -654,13 +654,6 @@
 					overflow = 'auto';
 				}
 
-				if($.browser.msie && options.height) {
-
-					width = scrollwidth;
-
-					overflow = 'scroll';
-				}
-
 				_fillScrollbar.css('margin-right', width);
 
 				return overflow;
