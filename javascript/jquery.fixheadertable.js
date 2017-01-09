@@ -198,7 +198,7 @@
 
 			var main_wrapper		= null;
 
-			var nbcol 				= $('thead th', this).length;
+			var nbcol 				= getColCount();
 
 			var _initialWidth		= $(this).width();
 
@@ -247,13 +247,29 @@
 				_headerscontainer.insertBefore(table);
 			}
 
+			function getCols(){
+				// Check for a tr.col-width-source in the table, use first one, then any th/td in it
+				var cols = _table.find('tr.col-width-source').first().find('th,td');
+
+				// Fall back to a thead tr.col th set otherwise (this is older behaviour, but
+				// doesn't work when the header has cells with colspans)
+				if( cols.length == 0 ){
+					var cols = _table.find('thead tr.col th');
+					if( cols.length == 0 ){ throw('Expected to find some columns, found zero.'); }
+				}
+
+				return cols;
+			}
+
+			function getColCount(){
+				return getCols().length;
+			}
+
 			function getWidthOfExistingColumn(colindex) {
 
-				// find the existing column
-				var cols = _table.find('thead tr.col th');
-				if (cols.length == 0) { throw('Expected to find some columns, found zero.'); }
+				var cols = getCols();
 				var col = cols.eq(colindex);
-				if (col.length != 1) { throw('Expected to find one column at index ' + colindex); }
+				if( col.length != 1 ){ throw('Expected to find one column at index ' + colindex); }
 
 				// find the pixel width of the existing column
 				return col.outerWidth();
