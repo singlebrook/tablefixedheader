@@ -238,6 +238,8 @@
 
 			var _resizeGhost		= null;
 
+			var _cols = null;
+
 			function buildTop (table) {
 
 				_fillScrollbar = $('<div class="headtable" style="margin-right : 0px"></div>');
@@ -248,17 +250,33 @@
 			}
 
 			function getCols(){
-				// Check for a tr.col-width-source in the table, use first one, then any th/td in it
-				var cols = _table.find('tr.col-width-source').first().find('th,td');
+				if (!_cols) {
+					var cols;
 
-				// Fall back to a thead tr.col th set otherwise (this is older behaviour, but
-				// doesn't work when the header has cells with colspans)
-				if( cols.length == 0 ){
-					var cols = _table.find('thead tr.col th');
-					if( cols.length == 0 ){ throw('Expected to find some columns, found zero.'); }
+					// Find the first row in the table with no colspans, and return its cells
+					// as a jQuery collection.
+					_table.find('tr').each(function(_, row) {
+						cols = $(row).find('th,td');
+						var rowHasColspans = false;
+						cols.each(function(_, cell) {
+							if (cell.getAttribute('colspan')) {
+								rowHasColspans = true;
+								// Break out of loop over cells. No need to look further in this row.
+								return false;
+							}
+						});
+						if (!rowHasColspans) {
+							// We found a suitable row.
+							// Break out of loop over rows, leaving last assignment of cols intact.
+							return false;
+						}
+					});
+
+					console.log('found cols');
+					_cols = cols;
 				}
 
-				return cols;
+				return _cols;
 			}
 
 			function getColCount(){
