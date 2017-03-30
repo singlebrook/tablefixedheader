@@ -272,7 +272,6 @@
 						}
 					});
 
-					console.log('found cols');
 					_cols = cols;
 				}
 
