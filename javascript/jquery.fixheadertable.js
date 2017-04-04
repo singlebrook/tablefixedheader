@@ -252,17 +252,25 @@
 			function getCols(){
 				if (!_cols) {
 					var cols;
+					var nextNRowsInvalid = 0;
 
 					// Find the first row in the table with no colspans, and return its cells
 					// as a jQuery collection.
 					_table.find('tr').each(function(_, row) {
+						// A prior row had a cell that spanned down into this row, so skip this
+						// row as it is missing at least one cell
+						if( nextNRowsInvalid > 0 ){
+							nextNRowsInvalid--;
+							return;
+						}
 						cols = $(row).find('th,td');
 						var rowHasColspans = false;
 						cols.each(function(_, cell) {
 							if (cell.getAttribute('colspan')) {
 								rowHasColspans = true;
-								// Break out of loop over cells. No need to look further in this row.
-								return false;
+							}
+							if (cell.getAttribute('rowspan')) {
+								nextNRowsInvalid = Math.max(nextNRowsInvalid, cell.getAttribute('rowspan')-1);
 							}
 						});
 						if (!rowHasColspans) {
