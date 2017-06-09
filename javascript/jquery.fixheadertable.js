@@ -648,7 +648,7 @@
 
 				if(options.height != null &&  !isNaN(parseInt(options.height))) {
 
-					_body.css('height', options.height + 'px');
+					_body.css('max-height', options.height + 'px');
 				}
 
 				_colgroup_body = _colgroup.clone();
