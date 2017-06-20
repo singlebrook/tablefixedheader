@@ -17,27 +17,27 @@
 (function($) {
 	$.fn.fixheadertable = function(options) {
 		var defaults = {
-			caption		 : '',
-			showhide	 : true,
-			theme		 : 'ui',
-			height		 : null,
-			width		 : null,
-			minWidth	 : null,
-			minWidthAuto : false,
-			colratio	 : [],
-			whiteSpace	 : 'nowrap',
-			addTitles	 : false,
-			zebra		 : false,
-			zebraClass	 : 'ui-state-active',
-			sortable	 : false,
-			sortedColId	 : null,
-			sortType	 : [],
-			dateFormat	 : 'd-m-y',
-			pager		 : false,
-			rowsPerPage	 : 10,
-			resizeCol	 : false,
-			minColWidth	 : 100,
-			wrapper		 : true
+			caption: '',
+			showhide: true,
+			theme: 'ui',
+			height: null,
+			width: null,
+			minWidth: null,
+			minWidthAuto:false,
+			colratio: [],
+			whiteSpace: 'nowrap',
+			addTitles: false,
+			zebra: false,
+			zebraClass: 'ui-state-active',
+			sortable: false,
+			sortedColId: null,
+			sortType: [],
+			dateFormat: 'd-m-y',
+			pager: false,
+			rowsPerPage: 10,
+			resizeCol: false,
+			minColWidth: 100,
+			wrapper: true
 		};
 		var options = $.extend(defaults, options);
 		function util_getComputedStyle(element, property) {
@@ -116,28 +116,28 @@
 			return new Date(tsp.y, tsp.m, tsp.d, tsp.h, tsp.i, tsp.s,0);
 		}
 		return this.each(function() {
-			var _table				= $(this);
-			var main_wrapper		= null;
-			var nbcol 				= getColCount();
-			var _initialWidth		= $(this).width();
-			var _wrapper 			= null;
-			var _headerscontainer	= null;
-			var _fillScrollbar 		= null;
-			var _body 				= null;
-			var _headers			= null;
-			var _scrollWidth		= util_getScrollbarWidth();
-			var _colgroup			= buildColgroup(nbcol);
-			var _colgroup_body		= null;
-			var _nbRowsPerPage		= 10;
-			var _new_nbRowsPerPage	= null;
-			var _nbpages			= null;
-			var _nbpagesDiv			= null;
-			var _currentpage 		= null;
-			var _pager				= null;
-			var _objectTable		= null;
-			var _stripNum 			= /[\$,%]/g;
-			var _resizeInfo 		= null;
-			var _resizeGhost		= null;
+			var _table = $(this);
+			var main_wrapper = null;
+			var nbcol = getColCount();
+			var _initialWidth = $(this).width();
+			var _wrapper = null;
+			var _headerscontainer = null;
+			var _fillScrollbar = null;
+			var _body = null;
+			var _headers = null;
+			var _scrollWidth = util_getScrollbarWidth();
+			var _colgroup = buildColgroup(nbcol);
+			var _colgroup_body = null;
+			var _nbRowsPerPage = 10;
+			var _new_nbRowsPerPage = null;
+			var _nbpages = null;
+			var _nbpagesDiv = null;
+			var _currentpage = null;
+			var _pager = null;
+			var _objectTable = null;
+			var _stripNum = /[\$,%]/g;
+			var _resizeInfo = null;
+			var _resizeGhost = null;
 			var _cols = null;
 			function buildTop (table) {
 				_fillScrollbar = $('<div class="headtable" style="margin-right : 0px"></div>');
@@ -359,7 +359,7 @@
 						$(_colgroup_body.children()[_resizeInfo.id]).css({ width : _resizeInfo.newWidth + 'px' });
 						var wrapper_width = _resizeInfo.newTableWidth;
 						_headers.css({ 'width' : wrapper_width + 'px' });
-						$(_table).css({ 'width'	: wrapper_width + 'px' });
+						$(_table).css({ 'width' : wrapper_width + 'px' });
 						_resizeInfo = null;
 						_resizeGhost.css({ display : 'none' });
 						_headerscontainer[0].scrollLeft = _body[0].scrollLeft;
