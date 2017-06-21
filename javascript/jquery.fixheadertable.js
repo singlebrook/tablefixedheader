@@ -41,15 +41,6 @@
 		};
 		var options = $.extend(defaults, options);
 
-		function util_getComputedStyle(element, property) {
-			if (element.currentStyle) {
-				var y = x.currentStyle[property];
-			} else if (window.getComputedStyle) {
-					var y = document.defaultView.getComputedStyle(element, null).getPropertyValue(property);
-			}
-			return y;
-		}
-
 		function util_getScrollbarWidth () {
 			var inner = $('<p/>').addClass('t_fixed_header_scroll_inner');
 			var outer = $('<div/>').addClass('t_fixed_header_scroll_outer');
