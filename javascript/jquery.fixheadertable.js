@@ -553,6 +553,8 @@
 			/***********************/
 			/********* MAIN ********/
 			/***********************/
+			var originalTableWidth = _table.outerWidth() + _scrollWidth;
+
 			_wrapper = $('<div/>').addClass('t_fixed_header default ' + options.theme).insertBefore(this).append(this);
 			_wrapper.css('border', 'none').css('font-weight', 'normal');
 			_main_wrapper = $('<div class="t_fixed_header_main_wrapper' + options.theme + '"></div>');
@@ -570,11 +572,7 @@
 			if (options.width != null && !isNaN(parseInt(options.width)) && options.width > 0) {
 				tampon.css('width', options.width + 'px');
 			} else {
-				/* This is just a hack. We're not sure this is the right solution.
-				The number 2 compensates for a border? This whole "formula" is just a
-				first attempt, at what is essentially a workaround anyways. -Jared 2013 */
-				var totalBodyTableWidth = _table.outerWidth() + _scrollWidth + 2;
-				tampon.css('width', totalBodyTableWidth + 'px');
+				tampon.css('width', originalTableWidth + 'px');
 			}
 			var res = _wrapper.detach();
 			var main_wrapper_child = $('<div class="t_fixed_header_main_wrapper_child"></div>');
