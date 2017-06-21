@@ -40,6 +40,7 @@
 			wrapper: true
 		};
 		var options = $.extend(defaults, options);
+
 		function util_getComputedStyle(element, property) {
 			if (element.currentStyle) {
 				var y = x.currentStyle[property];
@@ -48,6 +49,7 @@
 			}
 			return y;
 		}
+
 		function util_getScrollbarWidth () {
 			var inner = $('<p/>').addClass('t_fixed_header_scroll_inner');
 			var outer = $('<div/>').addClass('t_fixed_header_scroll_outer');
@@ -60,6 +62,7 @@
 			outer.remove();
 			return (w1 - w2);
 		}
+
 		function util_parseDate (format, date) {
 			/*
 			* Function taken to jqGrid
@@ -139,11 +142,13 @@
 			var _resizeInfo = null;
 			var _resizeGhost = null;
 			var _cols = null;
+
 			function buildTop (table) {
 				_fillScrollbar = $('<div class="headtable" style="margin-right : 0px"></div>');
 				_headerscontainer = _fillScrollbar;
 				_headerscontainer.insertBefore(table);
 			}
+
 			function getCols(){
 				if (!_cols) {
 					var cols;
@@ -177,9 +182,11 @@
 				}
 				return _cols;
 			}
+
 			function getColCount(){
 				return getCols().length;
 			}
+
 			function getWidthOfExistingColumn(colindex) {
 				var cols = getCols();
 				var col = cols.eq(colindex);
@@ -187,6 +194,7 @@
 				// find the pixel width of the existing column
 				return col.outerWidth();
 			}
+
 			function buildColgroup (nbcol) {
 				var colgroup = $('<colgroup />');
 				if (options.colratio.length == 0) {
@@ -208,6 +216,7 @@
 				}
 				return colgroup;
 			}
+
 			function sortColumn (table, number, sens, th) {
 				/*
 				* Function inspired by jqGrid
@@ -250,6 +259,7 @@
 				}
 				(options.pager) ? moveToPage(table) : objectToTable(_objectTable, table);
 			}
+
 			function objectToTable(objectArray, table) {
 				var body = $('tbody', table);
 				body.children().remove();
@@ -271,6 +281,7 @@
 					}
 				}
 			}
+
 			function tableToObject(table) {
 				var objectArray = [];
 				$('tr', table).each(function(i){
@@ -282,6 +293,7 @@
 				});
 				return objectArray;
 			}
+
 			function buildHeaders(table) {
 				_headers = $('<table class="head"/>').append(_colgroup).append($('thead', table));
 				_headers.addClass($(table).attr('class'));
@@ -333,6 +345,7 @@
 						}
 						return true;
 					});
+
 					function getOffset(col){
 						var ret = 0, cell = $('col', _colgroup), handler = $('th > span.ui-resize', _headers)[col], bso = _body[0].scrollLeft;
 						for(var i = 0; i < col; i++){
@@ -340,10 +353,12 @@
 						}
 						return handler.offsetLeft + 5 + ret - bso;
 					}
+
 					function dragStart(i, x){
 						_resizeInfo = { id : i, startX : x.clientX , initTableWidth : getColratioWidth(), offset : getOffset(i) };
 						_resizeGhost.css({ display : 'block', height : _headerscontainer.height() + _body.height() + 2 + 'px', left : _resizeInfo.offset + 'px', cursor : 'col-resize' });
 					}
+
 					function dragMove(x){
 						var diff = x.clientX - _resizeInfo.startX;
 						_resizeInfo.newWidth = parseInt($('col', _colgroup)[_resizeInfo.id].style.width) + diff;
@@ -354,6 +369,7 @@
 								_resizeInfo.newWidth = parseInt(options.minColWidth);
 						}
 					}
+
 					function dragEnd(){
 						$(_colgroup.children()[_resizeInfo.id]).css({ width : _resizeInfo.newWidth + 'px' });
 						$(_colgroup_body.children()[_resizeInfo.id]).css({ width : _resizeInfo.newWidth + 'px' });
@@ -366,6 +382,7 @@
 					}
 				}
 			}
+
 			function isIE6_7() {
 				if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
 					var ieversion = new Number(RegExp.$1);
@@ -376,6 +393,7 @@
 					}
 				}
 			}
+
 			function isIE8() {
 				if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
 					var ieversion = new Number(RegExp.$1);
@@ -386,6 +404,7 @@
 					}
 				}
 			}
+
 			function buildBody (table) {
 				_body = $('<div class="body"></div>').insertBefore(table).append(table);
 				if(options.height != null && !isNaN(parseInt(options.height))) {
@@ -403,6 +422,7 @@
 					$('tr:odd', table).addClass(options.zebraClass);
 				}
 			}
+
 			function adaptScroll (table) {
 				var scrollwidth = _scrollWidth;
 				if(isIE6_7()){
@@ -419,6 +439,7 @@
 				_fillScrollbar.css('margin-right', width);
 				return overflow;
 			}
+
 			function restrictRows(table, nbrows) {
 				var length = _objectTable.length;
 				var limit = 0;
@@ -435,6 +456,7 @@
 				_body.css('overflow-y', adaptScroll(table));
 				$('tr:last td', table).css('border-bottom-width', '1px');
 			}
+
 			function moveToNextPage(table) {
 				_currentpage++;
 				if(_currentpage >= (_nbpages)) {
@@ -442,6 +464,7 @@
 				}
 				moveToPage(table);
 			}
+
 			function moveToPreviousPage(table) {
 				_currentpage--;
 				if(_currentpage <= 1) {
@@ -449,6 +472,7 @@
 				}
 				moveToPage(table);
 			}
+
 			function moveToPage(table) {
 				var length = _objectTable.length;
 				var start, limit = 0;
@@ -464,6 +488,7 @@
 				_body.css('overflow-y', adaptScroll(table));
 				$('tr:last td', table).css('border-bottom-width', '1px');
 			}
+
 			function buildNavButton(className, callbackClick, buttonClass) {
 				var button = $('<div class="button ' + buttonClass + '"><span class="ui-icon ' + className + '">&nbsp;</span></div>');
 				_pager.append(button);
@@ -478,6 +503,7 @@
 					$(this).removeClass('ui-state-hover');
 				}).click(callbackClick);
 			}
+
 			function buildPager(table) {
 				_pager = $('<div class="pager ui-corner-bottom"></div>');
 				_main_wrapper.append(_pager);
@@ -525,6 +551,7 @@
 				$('#' + table.id + '_show_' + options.rowsPerPage + '_rows', _pager).click();
 				_button_set.buttonset();
 			}
+
 			function getColratioWidth(){
 				var tw = 0;
 				for(var i = 0; i < options.colratio.length; i++){
